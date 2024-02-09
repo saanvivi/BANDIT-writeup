@@ -34,7 +34,7 @@ exit -d
 
 Initially, I tried `cd -`, which gave me the error\
 **OLDPWD not set** \
-On adding `./` before the '-',Ii got the right output. `./` is used to execute a compiled program in the current directory. Here, it implies '-' is a file name in the directory.
+On adding `./` before the '-', I got the right output. `./` is used to execute a compiled program in the current directory. Here, it implies '-' is a file name in the directory.
 
 The password for the next level is: rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 
@@ -66,8 +66,7 @@ cat .hidden
 exit -d
 ~~~
 
-The command`cd` Used to change directory\
-using `ls` here, gave us nothing as the file with the pw is hidden. So, we used `ls -a`. `ls -a` will list all files, including hidden files.
+The command `cd` is used to change directory. Using `ls` here gave us nothing as the file with the password is hidden. So, we used `ls -a`. `ls -a` will list all files, including hidden files.
 
 The password for the next level is: 2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe
 
