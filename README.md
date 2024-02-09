@@ -6,7 +6,6 @@ The password for the next level is stored in a file called readme located in the
 
 ~~~
 ssh bandit0@bandit.labs.overthewire.org -p 2220
-password: bandit0
 ls
 file readme 
 cat readme 
