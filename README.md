@@ -125,7 +125,7 @@ cat /var/lib/dpkg/info/bandit7.password
 exit -d 
 ~~~
 
-`find -user` lets us dearch for all files ownmed by a user. `-group` searches for files owned by a group.
+`find -user` lets us search for all files owned by a user. `-group` searches for files owned by a group.
 
 The password for the next level is: z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
 
