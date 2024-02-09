@@ -39,7 +39,7 @@ On adding `./` before the '-', i got the right output. `./` is used to execute a
 The password for the next level is: rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 
 ## level 2
-**Level Goal**
+**Level Goal**\
 The password for the next level is stored in a file called spaces in this filename located in the home directory
 ~~~
 ssh bandit2@bandit.labs.overthewire.org -p 2220
@@ -49,7 +49,7 @@ cat spaces\ in\ this\ filename
 exit -d
 ~~~
 
-Initially, `cat spaces in this filename` gave me the wrong output as it considered each word as a file, which it isnt. On using escaoe character '/' after each word, it considered the whole thing as the file name, giving us the password. 
+Initially, `cat spaces in this filename` gave me the wrong output as it considered each word as a file, which it isnt. On using escape character '/' after each word, it considered the whole thing as the file name, giving us the password. 
 
 The password for the next level is: aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
 
@@ -84,7 +84,7 @@ cat ./-file07
 exit -d
 ~~~
 
-./ here implies that -file00 is the name of a file in the directory, and not a command or option. 
+`./` here implies that -file00 is the name of a file in the directory, and not a command or option. 
 Since we have so many files to search and find out which is the ASCII file, it is impractical to use file command on each file. We use `file ./-file0* `. Since all files share a similar name with the only difference being the number at *, the * will continue putting random numbers and running the command, and thus we can search all of them in one go.
 
 The password for the next level is: lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
