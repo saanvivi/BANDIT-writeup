@@ -95,7 +95,7 @@ The password for the next level is stored in a file somewhere under the inhere d
 
 human-readable\
 1033 bytes in size\
-not executable\
+not executable
 
 ~~~
 ssh bandit5@bandit.labs.overthewire.org -p 2220
@@ -116,7 +116,7 @@ The password for the next level is stored somewhere on the server and has all of
 
 owned by user bandit7\
 owned by group bandit6\
-33 bytes in size\
+33 bytes in size
 
 ~~~
 ssh bandit6@bandit.labs.overthewire.org -p 2220
@@ -141,7 +141,7 @@ exit -d
 ~~~
 
 the `grep` command is used to print lines that match patterns. ` -i` enables to search for a string case insensitively in the given file.
-
+Pipe `|` is used to send the output of one command to another.
 The password for the next level is: TESKZC0XvTetK0S9xNwm25STk5iWrBvP
 
 ## level 8
@@ -156,9 +156,171 @@ exit -d
 ~~~
 
 the `sort` command is used to sort lines of text files.\
-`uniq` command is used to  report or omit repeated lines. `-c` prefix lines by the number of occurrences. The only withba count of '1' is the file that contains the pw.
+`uniq` command is used to  report or omit repeated lines. `-c` prefix lines by the number of occurrences. The only line with a count of '1' is the password.
 
 The password for the next level is: EN632PlfYiZbn3PhVK3XOGSlNInNE00t
+
+## level 9
+**Level Goal** \
+The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
+~~~
+ssh bandit9@bandit.labs.overthewire.org -p 2220
+ls
+strings data.txt | grep ^=
+exit -d
+~~~
+It is stated that the password is stored in human readable format (strings) in data.txt. Thus, i used strings data.txt to find all strings in that file. Using `|`, i used its output on the grep command, which let me single out all files which begin with '='.
+This gave me multiple matches but only one with the password format, and thus thats the password.
+
+The password for the next level is: G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
+
+## level 10
+**Level Goal** \
+The password for the next level is stored in the file data.txt, which contains base64 encoded data
+~~~
+ssh bandit10@bandit.labs.overthewire.org -p 2220
+ls
+base64 data.txt --decode
+exit -d
+~~~
+The `base64` command lets you base64 encode/decode data and print to standard output. Here, `base64 --decode` has been used to decode the file data.txt.
+
+The password for the next level is: 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
+
+## level 11
+**Level Goal** \
+The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
+~~~
+ssh bandit11@bandit.labs.overthewire.org -p 222
+ls
+cat data.txt | tr 'a-z' 'n-za-m' | tr 'A-Z' 'N-ZA-M'
+
+~~~
+The `tr` command is used to transform and produce a modified output. In this case, `'a-z'` means modify all characterss between a to z and `'n-za-m'` shifts it by 13. n-z stands for the 13th letter from a to the last (z), and a-m is first letter to the one just before n (i.e m,12). This way, all 26 letters have been included. Simply repeat this for 'A-Z'. 
+
+The password for the next level is: JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
+
+## level 12
+**Level Goal** \
+The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)
+
+~~~
+ssh bandit12@bandit.labs.overthewire.org -p 2220
+mkdir /tmp/b12
+cp data.txt /tmp/b12
+cd /tmp/b12
+xxd -r data.txt > bandit
+file bandit
+~~~
+The hint mentioned that the file data.txt is a hexdump. So, we use `xxd -r` which is used to reverse a hexdump.\
+To move ahead, i checked the file type and it produced the output\
+**bandit: gzip compressed data**\
+So, we decompress it using;
+~~~
+mv bandit bandit.gz
+gzip -d bandit.gz
+file bandit
+~~~
+As it had been compressed multiple times, we check the file type again and it gives the output:\
+**bandit: bzip2 compressed data**\
+We decompress it using;
+~~~
+bzip2 -d bandit.bz2
+file bandit
+~~~
+Check file type \
+**bandit: gzip compressed data**\
+and decompress
+~~~
+mv bandit bandit.gz
+gzip -d bandit.gz
+file bandit
+~~~
+Check file type \
+**bandit: gzip compressed data**\
+and decompress
+Repeat this process.
+~~~
+mv bandit bandit.tar.gz
+tar xvf bandit.tar.gz
+~~~
+**data5.bin**
+~~~
+file data5.bin
+~~~
+**data5.bin: POSIX tar archive (GNU)**
+~~~
+mv data5.bin data5.tar.gz
+tar xvf data5.tar.gz
+~~~
+**data6.bin**
+~~~
+file data6.bin
+~~~
+**data6.bin: bzip2 compressed data**
+~~~
+mv data6.bin data6.bz2
+bzip2 -d data6.bz2
+file data6
+~~~
+**data6: POSIX tar archive (GNU)**
+~~~
+mv data6 data6.tar.gz
+tar -xvf data6.tar.gz
+~~~
+**data8.bin**
+~~~
+file data8.bin
+~~~
+**data8.bin: gzip compressed data**
+~~~
+mv data8.bin data8.gz
+gzip -d data8.gz
+file data8
+~~~
+**data8: ASCII text**\
+Now that the file is in ASCII format,  the password can be read directly from it.
+~~~
+cat data8
+exit -d
+~~~
+
+The password for the next level is: wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
+
+## level 13
+**Level Goal** \
+The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on
+~~~
+$ ssh bandit13@bandit.labs.overthewire.org -p 2220
+password: wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
+$ ls
+$ ssh -i sshkey.private bandit14@localhost -p 2220
+~~~
+We're now in bandit14
+~~~
+$ cat /etc/bandit_pass/bandit14
+$ exit -d
+~~~
+On running `ls` command, we get the sshkey.private file. The `ssh` command is used to securely log into a remote machine and execute commands on that machine. To do so, we need the private key, which we have supplied, the host, username, and port. the `-i` allows us to  specify the file. This is particularly useful when you have multiple identity files or need to use a specific file for authentication.  
+
+The password for the next level is: fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
+
+## level 14
+**Level Goal** \
+The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
+~~~
+ssh bandit14@bandit.labs.overthewire.org -p 2220
+nc localhost 30000
+~~~
+fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
+
+`netcat` or `nc` is used for reading and writing data between two computer networks. Here, we used it to write to port 30000 on locahost. The data sent was the password from the previous level. The command gave an output contaning the password for the next level. 
+
+The password for the next level is: jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
+
+
+
+
 
 
 
