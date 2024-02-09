@@ -327,6 +327,17 @@ The `diff` command compares files line by line. It was used to see what lines di
 The password for the next level is: hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
 
 
+## level 18
+**Level Goal** \
+The password for the next level is stored in a file readme in the homedirectory. Unfortunately, someone has modified .bashrc to log you out when you log in with SSH.
+~~~
+ssh bandit18@bandit.labs.overthewire.org -p 2220 ls
+ssh bandit18@bandit.labs.overthewire.org -p 2220 cat ~/readme
+~~~
+This level is solved using the fact that `ssh` is not onlu used for connecting to Linux servers remotely, but also allows us to execute commands on remote machine without logging into that machine.\
+We simply type the commands at the end of the ssh command you'd normally use for logging in to bandit 18.
+
+The password for the next level is: awhqfNnAbc1naukrpqDYcF95h7HoMTrC
 
 
 
