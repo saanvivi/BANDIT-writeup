@@ -234,7 +234,6 @@ and decompress.
 
 Repeat this process till the file is in human readable form.
 <img width="565" alt="Screenshot 2024-02-09 215917" src="https://github.com/saanvivi/BANDIT-writeup/assets/145047724/32971fbd-f847-4b6b-9e5e-3173807fe1cd">
-
 <img width="558" alt="Screenshot 2024-02-09 220342" src="https://github.com/saanvivi/BANDIT-writeup/assets/145047724/ba10b3b5-f3c9-4d9b-a356-06fb9b6ea375">
 
 Now that the file is in ASCII format,  the password can be read directly from it.
@@ -273,8 +272,6 @@ The password for the next level can be retrieved by submitting the password of t
 ssh bandit14@bandit.labs.overthewire.org -p 2220
 nc localhost 30000
 ~~~
-Returns **fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq**
-
 The command `netcat` or `nc` is used for reading and writing data between two computer networks. Here, we used it to write to port 30000 on locahost. The data sent was the password from the previous level. The command gave an output contaning the password for the next level. 
 
 The password for the next level is: jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
@@ -288,10 +285,7 @@ Helpful note: Getting “HEARTBEATING” and “Read R BLOCK”? Use -ign_eof an
 ssh bandit15@bandit.labs.overthewire.org -p 2220
 ncat --ssl localhost 30001
 ~~~
-Returns **jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt** \
-**Correct!**
-
-First I used `man nc | grep ssl` to see if I could find anything about that. No output. I then tried running the same command using `ncat` which showed me how to use `--ssl` to encrypt the message as ssl, similar to how I did it in the previous level. 
+First I used `man nc | grep ssl` to see if I could find anything about that. No output. I then tried running the same command using `ncat` which showed me how to use `--ssl` to encrypt the message as ssl, similar to how I did it in the previous level. On writing the password to this level, it returns the password to the next level. 
 
 The password for the next level is: JQttfApK4SeyHwDlI9SXGR50qclOAil1
 
