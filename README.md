@@ -18,7 +18,7 @@ exit -d
 `file` to show type of file\
 `cat` reading a file\
 `exit` to exit the server\
-on using `cat readme`, you get a string which is the password for the next level.
+On using `cat readme`, you get a string which is the password for the next level.
 
 The password for the next level is: NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
 
@@ -32,9 +32,9 @@ cat ./-
 exit -d
 ~~~
 
-Initially, i tried `cd -`, which gave me the error\
+Initially, I tried `cd -`, which gave me the error\
 **OLDPWD not set** \
-On adding `./` before the '-', i got the right output. `./` is used to execute a compiled program in the current directory. here, it implies '-' is a file name in the directory.
+On adding `./` before the '-',Ii got the right output. `./` is used to execute a compiled program in the current directory. Here, it implies '-' is a file name in the directory.
 
 The password for the next level is: rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 
@@ -66,7 +66,7 @@ cat .hidden
 exit -d
 ~~~
 
-`cd` Used to change directory\
+The command`cd` Used to change directory\
 using `ls` here, gave us nothing as the file with the pw is hidden. So, we used `ls -a`. `ls -a` will list all files, including hidden files.
 
 The password for the next level is: 2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe
@@ -142,6 +142,7 @@ exit -d
 
 the `grep` command is used to print lines that match patterns. ` -i` enables to search for a string case insensitively in the given file.
 Pipe `|` is used to send the output of one command to another.
+
 The password for the next level is: TESKZC0XvTetK0S9xNwm25STk5iWrBvP
 
 ## level 8
@@ -155,8 +156,8 @@ sort data.txt | uniq -c
 exit -d
 ~~~
 
-the `sort` command is used to sort lines of text files.\
-`uniq` command is used to  report or omit repeated lines. `-c` prefix lines by the number of occurrences. The only line with a count of '1' is the password.
+The `sort` command is used to sort lines of text files.\
+The `uniq` command is used to  report or omit repeated lines. `-c` prefix lines by the number of occurrences. The only line with a count of '1' is the password.
 
 The password for the next level is: EN632PlfYiZbn3PhVK3XOGSlNInNE00t
 
@@ -169,7 +170,7 @@ ls
 strings data.txt | grep ^=
 exit -d
 ~~~
-It is stated that the password is stored in human readable format (strings) in data.txt. Thus, I used strings data.txt to find all strings in that file. Using `|`, I used its output on the grep command, which let me single out all files which begin with '='.
+It is stated that the password is stored in human readable format (strings) in data.txt. Thus, I used `strings data.txt` to find all strings in that file. Using `|`, I used its output on the `grep` command, which let me single out all files which begin with '='.
 This gave me multiple matches but only one with the password format, and thus thats the password.
 
 The password for the next level is: G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
@@ -229,61 +230,15 @@ file bandit
 ~~~
 Check file type \
 **bandit: gzip compressed data**\
-and decompress
-~~~
-mv bandit bandit.gz
-gzip -d bandit.gz
-file bandit
-~~~
-Check file type \
-**bandit: gzip compressed data**\
-and decompress
-Repeat this process.
-~~~
-mv bandit bandit.tar.gz
-tar xvf bandit.tar.gz
-~~~
-**data5.bin**
-~~~
-file data5.bin
-~~~
-**data5.bin: POSIX tar archive (GNU)**
-~~~
-mv data5.bin data5.tar.gz
-tar xvf data5.tar.gz
-~~~
-**data6.bin**
-~~~
-file data6.bin
-~~~
-**data6.bin: bzip2 compressed data**
-~~~
-mv data6.bin data6.bz2
-bzip2 -d data6.bz2
-file data6
-~~~
-**data6: POSIX tar archive (GNU)**
-~~~
-mv data6 data6.tar.gz
-tar -xvf data6.tar.gz
-~~~
-**data8.bin**
-~~~
-file data8.bin
-~~~
-**data8.bin: gzip compressed data**
-~~~
-mv data8.bin data8.gz
-gzip -d data8.gz
-file data8
-~~~
-**data8: ASCII text**\
+and decompress.
+
+Repeat this process till the file is in human readable form.
+<img width="508" alt="Screenshot 2024-02-04 200908" src="https://github.com/saanvivi/BANDIT-writeup/assets/145047724/a1f66293-f287-4ab8-b514-490e2a274eb5">
 Now that the file is in ASCII format,  the password can be read directly from it.
 ~~~
 cat data8
 exit -d
 ~~~
-
 The password for the next level is: wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
 
 ## level 13
