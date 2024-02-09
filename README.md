@@ -13,11 +13,11 @@ cat readme
 exit -d
 ~~~
 
-ssh: used for connecting to Linux servers remotely\
-ls: to list all files and directories\
-file: to show type of file\
-cat: reading a file\
-exit: to exit the server\
+`ssh` used for connecting to Linux servers remotely\
+`ls` to list all files and directories\
+`file` to show type of file\
+`cat` reading a file\
+`exit` to exit the server\
 on using `cat readme`, you get a string which is the password for the next level.
 
 The password for the next level is: NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
@@ -34,7 +34,7 @@ exit -d
 
 Initially, i tried `cd -`, which gave me the error\
 **OLDPWD not set** \
-On adding ./ before the -, i got the right output. The ./ is used to execute a compiled program in the current directory. here, it implies - is a file name in the directory.
+On adding `./` before the '-', i got the right output. `./` is used to execute a compiled program in the current directory. here, it implies '-' is a file name in the directory.
 
 The password for the next level is: rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 
@@ -66,8 +66,8 @@ cat .hidden
 exit -d
 ~~~
 
-cd: Used to change directory\
-using ls here, gave us nothing as the file with the pw is hidden. So, we used `ls -a`. `ls -a` will list all files, including hidden files.
+`cd` Used to change directory\
+using `ls` here, gave us nothing as the file with the pw is hidden. So, we used `ls -a`. `ls -a` will list all files, including hidden files.
 
 The password for the next level is: 2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe
 
@@ -85,7 +85,7 @@ exit -d
 ~~~
 
 ./ here implies that -file00 is the name of a file in the directory, and not a command or option. 
-Since we have so many files to search and find out which is the ASCII file, it is impractical to use file commandon each file. We use `file ./-file0* `. Since all files share a similar name with the only difference being the number at *, the * will continue putting random numbers and running the command, and thus we can search all of them in one go.
+Since we have so many files to search and find out which is the ASCII file, it is impractical to use file command on each file. We use `file ./-file0* `. Since all files share a similar name with the only difference being the number at *, the * will continue putting random numbers and running the command, and thus we can search all of them in one go.
 
 The password for the next level is: lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
 
