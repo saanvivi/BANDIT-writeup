@@ -169,7 +169,7 @@ ls
 strings data.txt | grep ^=
 exit -d
 ~~~
-It is stated that the password is stored in human readable format (strings) in data.txt. Thus, i used strings data.txt to find all strings in that file. Using `|`, i used its output on the grep command, which let me single out all files which begin with '='.
+It is stated that the password is stored in human readable format (strings) in data.txt. Thus, I used strings data.txt to find all strings in that file. Using `|`, I used its output on the grep command, which let me single out all files which begin with '='.
 This gave me multiple matches but only one with the password format, and thus thats the password.
 
 The password for the next level is: G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
@@ -194,7 +194,6 @@ The password for the next level is stored in the file data.txt, where all lowerc
 ssh bandit11@bandit.labs.overthewire.org -p 222
 ls
 cat data.txt | tr 'a-z' 'n-za-m' | tr 'A-Z' 'N-ZA-M'
-
 ~~~
 The `tr` command is used to transform and produce a modified output. In this case, `'a-z'` means modify all characterss between a to z and `'n-za-m'` shifts it by 13. n-z stands for the 13th letter from a to the last (z), and a-m is first letter to the one just before n (i.e m,12). This way, all 26 letters have been included. Simply repeat this for 'A-Z'. 
 
@@ -213,7 +212,7 @@ xxd -r data.txt > bandit
 file bandit
 ~~~
 The hint mentioned that the file data.txt is a hexdump. So, we use `xxd -r` which is used to reverse a hexdump.\
-To move ahead, i checked the file type and it produced the output\
+To move ahead, I checked the file type and it produced the output\
 **bandit: gzip compressed data**\
 So, we decompress it using;
 ~~~
@@ -291,15 +290,14 @@ The password for the next level is: wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
 **Level Goal** \
 The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on
 ~~~
-$ ssh bandit13@bandit.labs.overthewire.org -p 2220
-password: wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
-$ ls
-$ ssh -i sshkey.private bandit14@localhost -p 2220
+ssh bandit13@bandit.labs.overthewire.org -p 2220
+ls
+ssh -i sshkey.private bandit14@localhost -p 2220
 ~~~
 We're now in bandit14
 ~~~
-$ cat /etc/bandit_pass/bandit14
-$ exit -d
+cat /etc/bandit_pass/bandit14
+exit -d
 ~~~
 On running `ls` command, we get the sshkey.private file. The `ssh` command is used to securely log into a remote machine and execute commands on that machine. To do so, we need the private key, which we have supplied, the host, username, and port. the `-i` allows us to  specify the file. This is particularly useful when you have multiple identity files or need to use a specific file for authentication.  
 
