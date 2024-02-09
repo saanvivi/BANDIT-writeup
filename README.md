@@ -334,8 +334,9 @@ The password for the next level is stored in a file readme in the homedirectory.
 ssh bandit18@bandit.labs.overthewire.org -p 2220 ls
 ssh bandit18@bandit.labs.overthewire.org -p 2220 cat ~/readme
 ~~~
-This level is solved using the fact that `ssh` is not onlu used for connecting to Linux servers remotely, but also allows us to execute commands on remote machine without logging into that machine.\
-We simply type the commands at the end of the ssh command you'd normally use for logging in to bandit 18.
+This level is solved using the fact that `ssh` is not only used for connecting to Linux servers remotely, but also allows us to execute commands on remote machine without logging into that machine.\
+We simply type the commands at the end of the ssh command you'd normally use for logging in to bandit 18.\
+Note: Every time an interactive Bash shell session starts, the .bashrc script file executes. It contains various comments, configurations, and functions to customize the shell experience and automate tasks.
 
 The password for the next level is: awhqfNnAbc1naukrpqDYcF95h7HoMTrC
 
