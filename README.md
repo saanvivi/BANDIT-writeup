@@ -225,6 +225,7 @@ As it had been compressed multiple times, we check the file type again and it gi
 **bandit: bzip2 compressed data**\
 We decompress it using;
 ~~~
+mv bandit bandit.bz2
 bzip2 -d bandit.bz2
 file bandit
 ~~~
@@ -233,12 +234,20 @@ Check file type \
 and decompress.
 
 Repeat this process till the file is in human readable form.
-<img width="508" alt="Screenshot 2024-02-04 200908" src="https://github.com/saanvivi/BANDIT-writeup/assets/145047724/a1f66293-f287-4ab8-b514-490e2a274eb5">
+<img width="565" alt="Screenshot 2024-02-09 215917" src="https://github.com/saanvivi/BANDIT-writeup/assets/145047724/32971fbd-f847-4b6b-9e5e-3173807fe1cd">
+
+<img width="558" alt="Screenshot 2024-02-09 220342" src="https://github.com/saanvivi/BANDIT-writeup/assets/145047724/ba10b3b5-f3c9-4d9b-a356-06fb9b6ea375">
+
 Now that the file is in ASCII format,  the password can be read directly from it.
 ~~~
 cat data8
 exit -d
 ~~~
+Commands used:\
+`gzip -d` or `gunzip` or `zcat`: To restore gzip compressed files.\
+`bzip2 -d` or `bunzip2`: Decompresses files compressed using bzip2.\
+`tar -xvf`: Extracts files from archives. `-x` extracts files from an archive. `-v'` displays verbose output during the extraction process and `-f` specifies the filename of the archive.
+
 The password for the next level is: wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
 
 ## level 13
@@ -254,7 +263,7 @@ We're now in bandit14
 cat /etc/bandit_pass/bandit14
 exit -d
 ~~~
-On running `ls` command, we get the sshkey.private file. The `ssh` command is used to securely log into a remote machine and execute commands on that machine. To do so, we need the private key, which we have supplied, the host, username, and port. the `-i` allows us to  specify the file. This is particularly useful when you have multiple identity files or need to use a specific file for authentication.  
+On running `ls` command, we get the sshkey.private file. The `ssh` command is used to securely log into a remote machine and execute commands on that machine. To do so, we need the private key, which we have supplied, the host, username, and port. `-i` allows us to  specify the file. This is particularly useful when you have multiple identity files or need to use a specific file for authentication.  
 
 The password for the next level is: fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
 
@@ -265,11 +274,65 @@ The password for the next level can be retrieved by submitting the password of t
 ssh bandit14@bandit.labs.overthewire.org -p 2220
 nc localhost 30000
 ~~~
-fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
+Returns **fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq**
 
-`netcat` or `nc` is used for reading and writing data between two computer networks. Here, we used it to write to port 30000 on locahost. The data sent was the password from the previous level. The command gave an output contaning the password for the next level. 
+The command `netcat` or `nc` is used for reading and writing data between two computer networks. Here, we used it to write to port 30000 on locahost. The data sent was the password from the previous level. The command gave an output contaning the password for the next level. 
 
 The password for the next level is: jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
+
+## level 15
+**Level Goal** \
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL encryption.
+
+Helpful note: Getting “HEARTBEATING” and “Read R BLOCK”? Use -ign_eof and read the “CONNECTED COMMANDS” section in the manpage. Next to ‘R’ and ‘Q’, the ‘B’ command also works in this version of that command…
+~~~
+ssh bandit15@bandit.labs.overthewire.org -p 2220
+ncat --ssl localhost 30001
+~~~
+Returns **jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt** \
+**Correct!**
+
+First I used `man nc | grep ssl` to see if I could find anything about that. No output. I then tried running the same command using `ncat` which showed me how to use `--ssl` to encrypt the message as ssl, similar to how I did it in the previous level. 
+
+The password for the next level is: JQttfApK4SeyHwDlI9SXGR50qclOAil1
+
+## level 16
+**Level Goal** \
+The credentials for the next level can be retrieved by submitting the password of the current level to a port on localhost in the range 31000 to 32000. First find out which of these ports have a server listening on them. Then find out which of those speak SSL and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
+~~~
+ssh bandit16@bandit.labs.overthewire.org -p 2220
+nmap -sV --version-light -v -p 31000-32000 localhost
+~~~
+<img width="508" alt="Screenshot 2024-02-04 200908" src="https://github.com/saanvivi/BANDIT-writeup/assets/145047724/ad26b754-e6ad-4045-916d-89d1b07a3c3e">
+
+Two ports running ssl, one echo n one unknown. On checking both, I found that 31790 is the one that returned an RSA Private key.
+
+<img width="467" alt="Screenshot 2024-02-09 221926" src="https://github.com/saanvivi/BANDIT-writeup/assets/145047724/c234a4a8-ae9c-4024-b919-ab58cdfe5173">
+
+~~~
+mkdir /tmp/b14
+cd /tmp/b14
+nano bkey.key
+chmod 400 bkey.key
+ssh -i bkey.key bandit17@localhost -p 2220
+~~~
+I created a new directory and file to store the RSA key in. Using `chmod` I changed the permissions so that it can be used. Then, I used the bkey.key file which now stored my ssh key to login to bandit 17. Now that I'm in bandit17, I used `cat /etc/bandit_pass/bandit17` to get the credentials.
+
+The password for the next level is: VwOSWtCA7lRKkTfbr2IDh6awj9RNZM5e
+
+## level 17
+**Level Goal** \
+There are 2 files in the homedirectory: passwords.old and passwords.new. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
+
+NOTE: if you have solved this level and see ‘Byebye!’ when trying to log into bandit18, this is related to the next level, bandit19
+~~~
+ssh bandit17@bandit.labs.overthewire.org -p 2220
+diff passwords.old passwords.new
+exit -d
+~~~
+The `diff` command compares files line by line. It was used to see what lines differ in the two files. The line in passwords.new that differed is the password.
+
+The password for the next level is: hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
 
 
 
